@@ -66,7 +66,7 @@ resource "aws_instance" "my_instance" {
   # conditional expression in terraform like if else if environment is prd or dev then 
   # volume size needs to be 20 else 10 how to this
   root_block_device {
-    volume_type = "gp3" #  env is prod ? (? is if) true : false 20 : var.ec2 
+    volume_type = "gp3" #  env is prod ? (? is if) true :( 20 : else 10 default) false 20 : var.ec2 
     volume_size = var.environment == "prd" ? 20 : var.ec2_default_instance_volume
   }
 
