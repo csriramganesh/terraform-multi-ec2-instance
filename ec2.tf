@@ -51,17 +51,23 @@ resource "aws_instance" "my_instance" {
     sriram-456 = "t3.micro"
   })
   # another mete argument is depends_on
-  depends_on = [ aws_security_group.my_group ] # after security group created instance need to get created
+  depends_on      = [aws_security_group.my_group] # after security group created instance need to get created
   key_name        = aws_key_pair.my_key.key_name
   security_groups = [aws_security_group.my_group.name]
   #instance_type   = var.instance_type  ->this when you use variable 
   instance_type = each.value # this when you use for_each if you want name then each.key key-value pair
-  ami             = var.aws_ami
-  user_data       = file("install-nginx.sh")
+  ami           = var.aws_ami
+  user_data     = file("install-nginx.sh")
 
+  # root_block_device {
+  #   volume_type = "gp3"
+  #  volume_size = var.ece_default_instance_volume # This whole root_block_device for normal creation 
+  # }
+  # conditional expression in terraform like if else if environment is prd or dev then 
+  # volume size needs to be 20 else 10 how to this
   root_block_device {
-    volume_type = "gp3"
-    volume_size = var.instance_volume
+    volume_type = "gp3" #  env is prod ? (? is if) true : false 20 : var.ec2 
+    volume_size = var.environment == "prd" ? 20 : var.ec2_default_instance_volume
   }
 
   tags = {

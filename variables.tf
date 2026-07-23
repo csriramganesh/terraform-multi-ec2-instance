@@ -4,8 +4,8 @@ variable "instance_type" {
 
 }
 
-variable "instance_volume" {
-  default = 15
+variable "ec2_default_instance_volume" {
+  default = 10
   type    = number
 
 }
@@ -16,3 +16,8 @@ variable "aws_ami" {
 
 }
 
+variable "environment" {
+  default = "prd"
+  type    = string
+
+}
